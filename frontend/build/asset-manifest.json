@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7ab04e78.css",
+    "main.js": "/static/js/main.7c13bff4.js",
+    "static/js/498.8c7f5c60.chunk.js": "/static/js/498.8c7f5c60.chunk.js",
+    "static/js/703.dd222d96.chunk.js": "/static/js/703.dd222d96.chunk.js",
+    "static/js/513.7d82fc54.chunk.js": "/static/js/513.7d82fc54.chunk.js",
+    "static/media/panda404.png": "/static/media/panda404.9e07f3a21ab8ef5cad75.png",
+    "static/media/padnda5.png": "/static/media/padnda5.0af7c079596595a38a5c.png",
+    "static/media/stamps.png": "/static/media/stamps.0b316b4eefe70212f5b7.png",
+    "static/media/padaaz2.png": "/static/media/padaaz2.881e7be0f0a4ba5e1cf9.png",
+    "static/media/payment.png": "/static/media/payment.053a4b6d462d80865f94.png",
+    "static/media/pandaazz.png": "/static/media/pandaazz.4b6044f98840a25164c1.png",
+    "static/media/signin.png": "/static/media/signin.9271c9420aed469f2e87.png",
+    "static/media/logo.png": "/static/media/logo.39af101936312c008dfe.png",
+    "static/media/uploadIcon.jpg": "/static/media/uploadIcon.53efada8fb032a7a815f.jpg",
+    "index.html": "/index.html",
+    "static/media/magnifying-glass-solid.svg": "/static/media/magnifying-glass-solid.819dbf4f84c4cdd27213.svg",
+    "main.7ab04e78.css.map": "/static/css/main.7ab04e78.css.map",
+    "main.7c13bff4.js.map": "/static/js/main.7c13bff4.js.map",
+    "498.8c7f5c60.chunk.js.map": "/static/js/498.8c7f5c60.chunk.js.map",
+    "703.dd222d96.chunk.js.map": "/static/js/703.dd222d96.chunk.js.map",
+    "513.7d82fc54.chunk.js.map": "/static/js/513.7d82fc54.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7ab04e78.css",
+    "static/js/main.7c13bff4.js"
+  ]
+}
