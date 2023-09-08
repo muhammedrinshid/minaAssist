@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7ab04e78.css",
-    "main.js": "/static/js/main.41677aef.js",
+    "main.js": "/static/js/main.84e8f22e.js",
     "static/js/498.8c7f5c60.chunk.js": "/static/js/498.8c7f5c60.chunk.js",
     "static/js/703.dd222d96.chunk.js": "/static/js/703.dd222d96.chunk.js",
     "static/js/513.7d82fc54.chunk.js": "/static/js/513.7d82fc54.chunk.js",
@@ -17,13 +17,13 @@
     "index.html": "/index.html",
     "static/media/magnifying-glass-solid.svg": "/static/media/magnifying-glass-solid.819dbf4f84c4cdd27213.svg",
     "main.7ab04e78.css.map": "/static/css/main.7ab04e78.css.map",
-    "main.41677aef.js.map": "/static/js/main.41677aef.js.map",
+    "main.84e8f22e.js.map": "/static/js/main.84e8f22e.js.map",
     "498.8c7f5c60.chunk.js.map": "/static/js/498.8c7f5c60.chunk.js.map",
     "703.dd222d96.chunk.js.map": "/static/js/703.dd222d96.chunk.js.map",
     "513.7d82fc54.chunk.js.map": "/static/js/513.7d82fc54.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7ab04e78.css",
-    "static/js/main.41677aef.js"
+    "static/js/main.84e8f22e.js"
   ]
 }

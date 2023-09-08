@@ -27,13 +27,13 @@ export const visaSchema = yup.object().shape({
     .typeError("number type")
     .required("gross amount required field")
     .integer()
-    .min(100),
+    .min(0),
   net_amount: yup
     .number()
     .typeError("number type")
     .required("net  amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .max(
       yup.ref("gross_amount"),
       "net amount should be less than or equal to gross amount"
@@ -43,7 +43,7 @@ export const visaSchema = yup.object().shape({
     .typeError("number type")
     .required("paid amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .max(
       yup.ref("gross_amount"),
       "paid amount should be less than or equal to gross amount"
@@ -78,12 +78,12 @@ export const appoinmentSchema = yup.object().shape({
     .required("gross amount required field")
     .integer()
     .typeError("number type")
-    .min(100),
+    .min(0),
   net_amount: yup
     .number()
     .required("net  amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .typeError("number type")
     .max(
       yup.ref("gross_amount"),
@@ -93,7 +93,7 @@ export const appoinmentSchema = yup.object().shape({
     .number()
     .required("paid amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .typeError("number type")
     .max(
       yup.ref("gross_amount"),
@@ -134,12 +134,12 @@ export const ticketShcema = yup.object().shape({
   .required("gross amount required field")
   .integer()
   .typeError("number type")
-  .min(100),
+  .min(0),
 net_amount: yup
   .number()
   .required("net  amount required field")
   .integer()
-  .min(100)
+  .min(0)
   .typeError("number type")
   .max(
     yup.ref("gross_amount"),
@@ -149,7 +149,7 @@ paid: yup
   .number()
   .required("paid amount required field")
   .integer()
-  .min(100)
+  .min(0)
   .typeError("number type")
   .max(
     yup.ref("gross_amount"),
@@ -178,7 +178,7 @@ export const transactionSchema=yup.object().shape({
     .number()
     .required("net  amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .typeError("number type")
     ,  agency: yup.string().required("agency required"),
     title:yup.string().required(), 
@@ -215,12 +215,12 @@ export const agencySchema=yup.object().shape({
     .required("gross amount required field")
     .integer()
     .typeError("number type")
-    .min(100),
+    .min(0),
   net_amount: yup
     .number()
     .required("net  amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .typeError("number type")
     .max(
       yup.ref("gross_amount"),
@@ -230,7 +230,7 @@ export const agencySchema=yup.object().shape({
     .number()
     .required("paid amount required field")
     .integer()
-    .min(100)
+    .min(0)
     .typeError("number type")
     .max(
       yup.ref("gross_amount"),
@@ -295,7 +295,7 @@ export const agencySchema=yup.object().shape({
     .typeError("number type")
     .required("paid amount required field")
     .integer()
-    .min(100),
+    .min(0),
     seats:yup
     .number()
     .default(1)
