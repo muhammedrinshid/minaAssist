@@ -12,7 +12,7 @@ export const visaSchema = yup.object().shape({
     .string()
     .required("required field")
     .min(6, "atleast 6  character")
-    .max(7, "length should be less than 7 "),
+    .max(9, "length should be less than 7 "),
   phone: yup
     .string("phone number must be decimal")
     .required("required field")
@@ -198,7 +198,7 @@ export const agencySchema=yup.object().shape({
     .string()
     
     .min(6, "atleast 6  character")
-    .max(7, "length should be less than 7 "),
+    .max(9, "length should be less than 7 "),
     phone: yup
     .string("phone number must be decimal")
     .required("required field")
@@ -270,7 +270,7 @@ export const agencySchema=yup.object().shape({
     pass_number: yup
     .string()
     .min(6, "atleast 6  character")
-    .max(7, "length should be less than 7 "),
+    .max(9, "length should be less than 7 "),
 
   })
 

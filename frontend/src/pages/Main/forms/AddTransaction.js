@@ -139,7 +139,9 @@ const AddTransaction = () => {
               <input
                   type="date"
                   defaultValue={new Date().toISOString().substring(0, 10)}
-                  {...register("transaction_date")}
+                  {...register("transaction_date", {
+                    valueAsDate: true,
+                  })}
                 />
               <p className="error">{errors.transaction_date?.message}</p>
 

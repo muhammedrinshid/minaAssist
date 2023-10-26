@@ -94,7 +94,9 @@ const AddAttastation = () => {
             
                 defaultValue={new Date().toISOString().substring(0, 10)}
 
-                {...methods.register("remitted_date")}
+                {...methods.register("remitted_date", {
+                  valueAsDate: true,
+                })}
               />
               <p className="error">{errors.remitted_date?.message}</p>
 
@@ -138,7 +140,9 @@ const AddAttastation = () => {
                 className="currentdate"
                 id="from"
                
-                {...methods.register("dob")}
+                {...methods.register("dob", {
+                  valueAsDate: true,
+                })}
               />
               <p className="error">{errors.dob?.message}</p>
 

@@ -78,7 +78,9 @@ const UpdateAttastationForm = ({agencies,preLoadedValues,defaultContainer}) => {
                 type="date"
             
 
-                {...methods.register("remitted_date")}
+                {...methods.register("remitted_date", {
+                  valueAsDate: true,
+                })}
               />
               <p className="error">{errors.remitted_date?.message}</p>
 
@@ -124,7 +126,9 @@ const UpdateAttastationForm = ({agencies,preLoadedValues,defaultContainer}) => {
               
                 
                
-                {...methods.register("dob")}
+                {...methods.register("dob", {
+                  valueAsDate: true,
+                })}
               />
               <p className="error">{errors.dob?.message}</p>
 

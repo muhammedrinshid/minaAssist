@@ -79,7 +79,9 @@ const UpdateAppoinment = () => {
             </p>
             <input
               type="date"
-              {...register("submission_date")}
+              {...register("submission_date", {
+                valueAsDate: true,
+              })}
             ></input>
             <p className="error">{errors.submission_date?.message}</p>
           </div>
@@ -89,7 +91,9 @@ const UpdateAppoinment = () => {
             </p>
             <input
               type="date"
-              {...register("appoinment_date")}
+              {...register("appoinment_date", {
+                valueAsDate: true,
+              })}
             />
             <p className="error">{errors.appoinment_date?.message}</p>
           </div>

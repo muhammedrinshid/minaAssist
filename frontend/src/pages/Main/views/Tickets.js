@@ -183,7 +183,12 @@ const Tickets = () => {
           
           </div>
           </div>
-          {next&&<div class="more" onClick={()=>setPageNumber((prev)=>prev+1)} >Load More</div>}
+          {next&&<div class="more" onClick={()=>{
+            
+            setPageNumber((prev)=>prev+1)
+            console.log("page number updated",pageNumber)
+          
+          }} >Load More</div>}
 
         </div>
       </div>

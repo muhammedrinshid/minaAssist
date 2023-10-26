@@ -97,7 +97,9 @@ const UpdateTicketRequest = () => {
               <p>
                 <i className="fa-solid fa-star-of-life"></i> From Date
               </p>
-              <input type="date" {...methods.register("from_date")} />
+              <input type="date" {...methods.register("from_date", {
+                valueAsDate: true,
+              })} />
               <p className="error">{errors.from_date?.message}</p>
 
             </div>
@@ -105,7 +107,9 @@ const UpdateTicketRequest = () => {
               <p>
                 <i className="fa-solid fa-star-of-life"></i> To Date
               </p>
-              <input type="date" {...methods.register("to_date")} />
+              <input type="date" {...methods.register("to_date", {
+                valueAsDate: true,
+              })} />
               <p className="error">{errors.to_date?.message}</p>
 
             </div>

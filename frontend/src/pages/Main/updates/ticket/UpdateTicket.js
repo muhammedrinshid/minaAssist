@@ -110,7 +110,9 @@ const UpdateTicket = () => {
                 className="currentdate"
                 id="from"
                 defaultValue={new Date().toISOString().substring(0, 10)}
-                {...methods.register("booked_on")}
+                {...methods.register("booked_on", {
+                  valueAsDate: true,
+                })}
               />
               <p className="error">{errors.booked_on?.message}</p>
             </div>
@@ -161,7 +163,9 @@ const UpdateTicket = () => {
               <p>
                 <i className="fa-solid fa-star-of-life"></i> Depature Date
               </p>
-              <input type="date" {...methods.register("depature_date")} />
+              <input type="date" {...methods.register("depature_date", {
+                valueAsDate: true,
+              })} />
               <p className="error">{errors.depature_date?.message}</p>
             </div>
             <div className="input__field">

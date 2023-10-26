@@ -75,7 +75,9 @@ const SellTicket = () => {
                   type="date"
                   class="currentdate"
                   id="from"
-                  {...methods.register("date")}
+                  {...methods.register("date", {
+                    valueAsDate: true,
+                  })}
                 />
                 <p className="error">{errors.date?.message}</p>
 

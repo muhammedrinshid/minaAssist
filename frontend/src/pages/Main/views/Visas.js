@@ -111,6 +111,9 @@ const Visas = () => {
 
     }
 }
+const nextPage = () => {
+  setPageNumber((prev) => prev + 1);
+};
 
     const typeChange=(k)=>{
       
@@ -180,8 +183,8 @@ if (loading) {
           <div className="informations">
             <div className="depatures tickets">
               <div className="app__dep__header visa__controler">
-                <div className="information__link" >Stambing</div>
                 <div className="information__link" >E-visa</div>
+                <div className="information__link" >Stambing</div>
               </div>
   
               <div className="">
@@ -243,7 +246,7 @@ if (loading) {
               
               </div>
             </div>
-            {next&&<div class="more" onClick={()=>setPageNumber((prev)=>prev+1)} >Load More</div>
+            {next&&<div class="more" onClick={nextPage} >Load More</div>
 }
 
           </div>

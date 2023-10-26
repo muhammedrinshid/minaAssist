@@ -70,7 +70,7 @@ const CreateAppoinment = () => {
               <input
                 type="date"
                 {...register("submission_date", {
-                  valueAsDate: false,
+                  valueAsDate: true,
                 })}
                 defaultValue={new Date().toISOString().substring(0, 10)}
               ></input>

@@ -83,14 +83,18 @@ const AddVisaStambing = () => {
                   <i className="fa-solid fa-star-of-life"></i> Pass Issue Date
                 </p>
 
-                <input type="date" {...methods.register("pass_issue")} />
+                <input type="date" {...methods.register("pass_issue", {
+                  valueAsDate: true,
+                })} />
                 <p className="error">{errors.pass_issue?.message}</p>
               </div>
               <div className="input__field">
                 <p>
                   <i className="fa-solid fa-star-of-life"></i> Date of Expiry
                 </p>
-                <input type="date" {...methods.register("pass_expiry")} />
+                <input type="date" {...methods.register("pass_expiry", {
+                  valueAsDate: true,
+                })} />
                 <p className="error">{errors.pass_expiry?.message}</p>
               </div>
             </div>
@@ -131,7 +135,9 @@ const AddVisaStambing = () => {
                 <input
                   type="date"
                   placeholder="9876543210"
-                  {...methods.register("dob")}
+                  {...methods.register("dob", {
+                    valueAsDate: true,
+                  })}
                 />
                 <p className="error">{errors.dob?.message}</p>
 
@@ -144,7 +150,9 @@ const AddVisaStambing = () => {
                 <input
                   type="date"
                   defaultValue={new Date().toISOString().substring(0, 10)}
-                  {...methods.register("remitted_date")}
+                  {...methods.register("remitted_date", {
+                    valueAsDate: true,
+                  })}
                 />
                 <p className="error">{errors.remitted_date?.message}</p>
               </div>
