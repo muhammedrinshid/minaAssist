@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const Appoinments = () => {
   const navigate = useNavigate();
-  const { getHeaders,logoutUser } = useContext(AuthContext);
+  const { getHeaders,logoutUser,domain } = useContext(AuthContext);
   const [appoinmentCount, setAppoinmentCount] = useState(0);
   const date1 = new Date();
   const date2 = new Date();
@@ -64,7 +64,7 @@ const Appoinments = () => {
     setLoading(true);
     axios
       .get(
-        `/api/get-appoinments?page=${pageNumber}&from=${from}&to=${to}&q=${q}&order=${byAppoinment}`,
+        `${domain}/api/get-appoinments?page=${pageNumber}&from=${from}&to=${to}&q=${q}&order=${byAppoinment}`,
         getHeaders
       )
       .then((res) => {
@@ -116,10 +116,13 @@ const Appoinments = () => {
   if (loading) {
     return <Loading />;
   }
+  const nextPage = () => {
+    setPageNumber((prev) => prev + 1);
+  };
   const confirmDelete = () => {
     axios
       .delete(
-        `/api/appoinment/${deleteContent.id}/`,
+        `${domain}/api/appoinment/${deleteContent.id}/`,
         getHeaders
       )
       .then((res) => {
@@ -219,7 +222,7 @@ const Appoinments = () => {
           )}
 
           {next && (
-            <div class="more" onClick={() => setPageNumber((prev) => prev + 1)}>
+            <div class="more" onClick={nextPage}>
               Load More
             </div>
           )}

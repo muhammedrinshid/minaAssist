@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   
   
 const domainname=window.location.hostname
+const Domain=""
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -54,7 +55,7 @@ const domainname=window.location.hostname
     };
   }, [authTocken, loading]);
   let getAgencies=()=>{
-    axios.get("/api/get-agencies/", {
+    axios.get(`${Domain}/api/get-agencies/`, {
       headers:{
         'Content-Type':'application/json',
         'Authorization':'Bearer '+String(authTocken?.access)
@@ -75,7 +76,7 @@ const domainname=window.location.hostname
   let updateTocken = async () => {
 
     axios
-      .post("/api/token/refresh/", {
+      .post(`${Domain}/api/token/refresh/`, {
         refresh: authTocken.refresh,
       })
       .then((res) => {
@@ -124,7 +125,9 @@ const domainname=window.location.hostname
     getAgencies:getAgencies,
     agencies:agencies,
     tConvert:tConvert,
-    domainName:domainname
+    domainName:domainname,
+    domain:Domain,
+    
 
   };
   return (

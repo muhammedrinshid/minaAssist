@@ -6,11 +6,11 @@ import { NavLink,  } from "react-router-dom";
 const LeftHeader = () => {
   return (
     <div className="navigation" id="nav">
-                <div className="navigation__inner">
+                <div className="navigation__inner" >
                     <ul>
 
                         <li >
-                            <NavLink href="">
+                            <NavLink className={({isActive})=>isActive?"":null} to="/admin-dashboard">
                                 <span className=" "></span>
                                 <span className="icon "><ion-icon  name="grid"></ion-icon></span>
 

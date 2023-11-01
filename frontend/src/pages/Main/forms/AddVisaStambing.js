@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { visaSchema } from "../../../utlties/Schemas";
 
 const AddVisaStambing = () => {
-  const { agencies, getAgencies,headers,logoutUser } = useContext(AuthContext);
+  const { agencies, getAgencies,headers,logoutUser,domain } = useContext(AuthContext);
 
   useEffect(() => {
     getAgencies();
@@ -31,7 +31,7 @@ const AddVisaStambing = () => {
     data['title']=data['applicant_name']+" "+data['visa_type']+" visa"
     data['transaction_date']=data['remitted_date']
 
-    axios.post("/api/visa/",data,{headers}).then((res)=>{
+    axios.post(`${domain}/api/visa/`,data,{headers}).then((res)=>{
       if (res.status==201) {
         created()
         clearForm()

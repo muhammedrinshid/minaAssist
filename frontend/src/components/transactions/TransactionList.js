@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const TransactionList = (props) => {
   const navigate = useNavigate();
-  const { getHeaders, logoutUser } = useContext(AuthContext);
+  const { getHeaders, logoutUser,domain } = useContext(AuthContext);
   const {
     seeUsers,
     agencyId,
@@ -33,7 +33,7 @@ const TransactionList = (props) => {
     agencyId &&
       axios
         .get(
-          `/api/get-transactions/${agencyId}?from=${from}&to=${to}&page=${pageNumber}&q=${q}`,
+          `${domain}/api/get-transactions/${agencyId}?from=${from}&to=${to}&page=${pageNumber}&q=${q}`,
           getHeaders
         )
         .then((res) => {
@@ -49,7 +49,7 @@ const TransactionList = (props) => {
 
     if (agencyId) {
       axios
-        .get(`/api/final-amount/${agencyId}/`, getHeaders)
+        .get(`${domain}/api/final-amount/${agencyId}/`, getHeaders)
         .then((res) => {
           setFinalAmount(res.data);
 
@@ -71,7 +71,7 @@ const TransactionList = (props) => {
   };
   const getTransactionData = (pk) => {
     axios
-      .get(`/api/transaction/${pk}/`, getHeaders)
+      .get(`${domain}/api/transaction/${pk}/`, getHeaders)
       .then((res) => {
         setTransactionEnlarger(() => res.data);
         let block = document.getElementById("enlarger__outer__layer4");

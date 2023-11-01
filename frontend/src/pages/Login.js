@@ -19,14 +19,14 @@ const Login = () => {
 
     
     
-    const {setUser,setAuthTocken,authTocken,user}=useContext(AuthContext)
+    const {setUser,setAuthTocken,authTocken,user,domain}=useContext(AuthContext)
     const [loginError,setLoginError]=useState(null)
 
     let loginUser = async (e) => {
         e.preventDefault();
     
         axios
-          .post("/api/token/", {
+          .post(`${domain}/api/token/`, {
             email: e.target.usermail.value,
             password: e.target.userpassword.value,
           })

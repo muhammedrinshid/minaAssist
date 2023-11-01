@@ -37,6 +37,10 @@ urlpatterns = [
     path('final-amount/<str:pk>/',views.getFinalAmount,name='final_amount'),
     path('visa/<str:pk>/',views.visa,name='visa'),
     path('agency/<str:pk>/',views.agency,name='agency'),
+    path('get-quantity-panel/',views.getQuantiyPanel,name='get__quantity__panel'),
+    path('get-barchart/',views.getBarchart,name='get__barchart'),
+    path('get-profit-panel/',views.getProfitPanel,name='get__profit__panel'),
+    path('get-agency-payment/',views.getAgencyPayments,name='get_agency_payments'),
     path('alter-seats/<str:pk>/',views.alterSeats,name='alter_seats'),
    
     path('sample/',views.sample,name='sample'),

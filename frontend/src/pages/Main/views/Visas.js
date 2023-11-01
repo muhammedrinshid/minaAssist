@@ -226,8 +226,8 @@ if (loading) {
           <div className="informations">
             <div className="depatures tickets">
               <div className="app__dep__header visa__controler">
-                <div className={!type?"information__link active__information__link visa__link":"information__link"} onClick={()=>typeChange(true)}>Stambing</div>
-                <div className={type?"information__link active__information__link visa__link":"information__link"} onClick={()=>typeChange(false)}>E-visa</div>
+                <div className={!type?"information__link active__information__link visa__link":"information__link"} onClick={()=>typeChange(true)}>E-Visa</div>
+                <div className={type?"information__link active__information__link visa__link":"information__link"} onClick={()=>typeChange(false)}>Stambing</div>
               </div>
   <div className="information__flex__container">
   {visas.length==0?(<div class="no_data_error">

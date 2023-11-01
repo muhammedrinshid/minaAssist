@@ -15,7 +15,7 @@ const Transactions = () => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const [agencies,setAgencies]=useState([])
-  const {headers,getHeaders,logoutUser}=useContext(AuthContext)
+  const {headers,getHeaders,logoutUser,domain}=useContext(AuthContext)
 
 
   const [agencyId, setAgencyId] = useState(null);
@@ -101,7 +101,7 @@ const Transactions = () => {
     seeUsers:seeUsers
   }
   useEffect(() => {
-    axios.get("/api/get-agencies/", {headers}).then((res)=>{
+    axios.get(`${domain}/api/get-agencies/`, {headers}).then((res)=>{
       setAgencies(res.data)
     }).catch((err)=>{
       if (err?.response.status==401) {

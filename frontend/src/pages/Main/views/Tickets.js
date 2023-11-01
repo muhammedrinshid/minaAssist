@@ -10,7 +10,7 @@ import AuthContext from "../../../context/AuthContext";
 import { Deleted, errorOccured } from "../../../utlties/Toastes";
 
 const Tickets = () => {
-  const {getHeaders,logoutUser}=useContext(AuthContext)
+  const {getHeaders,logoutUser,domain}=useContext(AuthContext)
   const navigate=useNavigate()
   const date1 = new Date();
   const date2 = new Date();
@@ -84,7 +84,7 @@ const Tickets = () => {
 
   useEffect(()=>{
     setLoading(true)
-    axios.get( `/api/get-tickets?page=${pageNumber}&from=${from}&to=${to}&q=${q}&order=${order}`,
+    axios.get( `${domain}/api/get-tickets?page=${pageNumber}&from=${from}&to=${to}&q=${q}&order=${order}`,
     getHeaders).then((res)=>{
       setTickets((prev)=>[...prev,...res.data.results])
       setLoading(false)
@@ -100,7 +100,7 @@ const Tickets = () => {
     })
   },[delRefresh])
   const confirmDelete=()=>{
-    axios.delete(`/api/depature/${deleteContent.id}/`,getHeaders).then((res)=>{
+    axios.delete(`${domain}/api/depature/${deleteContent.id}/`,getHeaders).then((res)=>{
         Deleted()
         setTickets([])
 
@@ -115,7 +115,11 @@ const Tickets = () => {
       }
       errorOccured()
     })
+
   }
+  const nextPage = () => {
+    setPageNumber((prev) => prev + 1);
+  };
 
 
   if (loading) {
@@ -183,12 +187,7 @@ const Tickets = () => {
           
           </div>
           </div>
-          {next&&<div class="more" onClick={()=>{
-            
-            setPageNumber((prev)=>prev+1)
-            console.log("page number updated",pageNumber)
-          
-          }} >Load More</div>}
+          {next&&<div class="more" onClick={nextPage} >Load More</div>}
 
         </div>
       </div>

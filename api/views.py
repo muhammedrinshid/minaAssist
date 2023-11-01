@@ -9,10 +9,13 @@ from .serailizers import CreateUserSerializer,AirlineSerializer, AppoinmentSeria
 from rest_framework import status
 from django_countries import countries
 from .models import Agency,NewUser, Airline, Airport, TicketOnSale, TicketRequest, Appoinment, Issued_ticket, Applied_visa, Attastation, AccountTransation
-from django.db.models import Q
+from django.db.models import Q,F
 from rest_framework.pagination import PageNumberPagination
-from django.db.models import Sum
+from django.db.models import Sum,Count
+
 import datetime
+import calendar
+months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -241,6 +244,197 @@ def getTransactions(request, pk):
     result_page = paginator.paginate_queryset(transactions, request)
     serialized = GetTransactionsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serialized.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getBarchart(request):
+    parms=request.GET.dict()
+    q_year=int(parms['year'])
+    q_month=int(parms['month'])
+    # ---------this was the special method
+    # last_day=calendar.monthrange(q_year,q_month)[1]
+    # start_date=datetime(q_year,q_month,last_day)
+   
+
+    # one__year__ago=start_date-relativedelta(months=12)
+    # print(one__year__ago,start_date)
+    # profits_per_month=AccountTransation.objects.filter(
+    #     created_on__gt=one__year__ago,created_on__lte=start_date,owner=request.user).annotate(
+    #     month=F('created_on__month'),
+    #     year=F('created_on__year')
+    #     ).values('year','month').annotate(
+    #     profit=Sum(F('gross_amount')- F('net_amount'))
+    #     ).order_by('year','month')
+    # print(profits_per_month)
+  
+    
+    result=[]
+    
+    for i in range(12):
+        temp=AccountTransation.objects.filter(owner=request.user,transaction_date__month=q_month,transaction_date__year=q_year,debit_or_credit=False).aggregate(profit=Sum(F('gross_amount')-F('net_amount') ))
+        result.append( {
+            "month":months[q_month-1],
+            "profit":temp['profit']
+        })
+        if q_month==1:
+            q_month=12
+            q_year-=1
+        else:
+            q_month-=1
+        
+
+    return Response(result[::-1])
+
+
+
+
+    
+
+           
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getAgencyPayments(request):
+      # profits_per_month=AccountTransation.objects.filter(
+    #     created_on__gt=one__year__ago,created_on__lte=start_date,owner=request.user).annotate(
+    #     month=F('created_on__month'),
+    #     year=F('created_on__year')
+    #     ).values('year','month').annotate(
+    #     profit=Sum(F('gross_amount')- F('net_amount'))
+    #     ).order_by('year','month')
+    # print(profits_per_month)
+    
+    agencies=Agency.objects.filter(owner=request.user)
+    result=list()
+    
+    for agency in agencies:
+        temp={}
+        debited=AccountTransation.objects.filter(owner=request.user,agency=agency,debit_or_credit=False).aggregate(debited=Sum('net_amount',default=0))
+        credited=AccountTransation.objects.filter(owner=request.user,agency=agency,debit_or_credit=True).aggregate(credited=Sum('net_amount',default=0))
+        temp_profit=credited['credited']-debited['debited']
+        temp['balance']=float(temp_profit)
+
+        temp['img']=agency.image.url
+        temp['name']=agency.name
+        temp['branch']=agency.branch
+        result.append(temp)
+    return Response(sorted(result,key=lambda x:abs(x['balance']),reverse=True))
+
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getProfitPanel(request):
+    parms=request.GET.dict()
+    q_year=int(parms['year'])
+    q_month=int(parms['month'])
+    full=parms['full']
+    result=dict()
+    if full=='true':
+        temp1=AccountTransation.objects.filter(owner=request.user,debit_or_credit=False,transaction_date__year=q_year).aggregate(revenue=Sum('gross_amount',default=0),expance=Sum('net_amount',default=int(0)))
+        temp2=AccountTransation.objects.filter(owner=request.user,debit_or_credit=False,transaction_date__year=q_year-1).aggregate(prevenue=Sum('gross_amount',default=0),pexpance=Sum('net_amount',default=int(0)))
+        result['revenue']=temp1['revenue']
+        result['expance']=temp1['expance']
+        result['prevenue']=temp2['prevenue']
+        result['pexpance']=temp2['pexpance']
+        result['profit']=result['revenue']-result['expance']
+        result['pprofit']=result['prevenue']-result['pexpance']
+        return Response(result)
+
+       
+    else:
+        prev_q_month=q_month-1
+        prev_q_year=q_year
+        if(q_month==1):
+            prev_q_month=12
+            prev_q_year=q_year-1
+        temp1=AccountTransation.objects.filter(owner=request.user,debit_or_credit=False,transaction_date__year=q_year,transaction_date__month=q_month).aggregate(revenue=Sum('gross_amount',default=0),expance=Sum('net_amount',default=int(0)))
+        temp2=AccountTransation.objects.filter(owner=request.user,debit_or_credit=False,transaction_date__year=prev_q_year,transaction_date__month=prev_q_month).aggregate(prevenue=Sum('gross_amount',default=0),pexpance=Sum('net_amount',default=int(0)))
+        result['revenue']=temp1['revenue']
+        result['expance']=temp1['expance']
+        result['prevenue']=temp2['prevenue']
+        result['pexpance']=temp2['pexpance']
+        result['profit']=result['revenue']-result['expance']
+        result['pprofit']=result['prevenue']-result['pexpance']
+        return Response(result)
+
+
+
+
+
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getQuantiyPanel(request):
+    result=dict()
+    parms=request.GET.dict()
+    q_year=parms['year']
+    q_month=(parms['month'])
+    full=parms['full']
+    if full=='true':
+        result['visa']=Applied_visa.objects.filter(owner=request.user,remitted_date__year=q_year).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        result['ticket']=Issued_ticket.objects.filter(owner=request.user,booked_on__year=q_year).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Sum('number_of_travelers'))
+        result['appoinments']=Appoinment.objects.filter(owner=request.user,submission_date__year=q_year).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        result['attastation']=Attastation.objects.filter(owner=request.user,remitted_date__year=q_year).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        
+        q_year=int(q_year)-1
+        temp=Applied_visa.objects.filter(owner=request.user,remitted_date__year=int(q_year)).aggregate(pcount=Count('id'))
+        result['visa']['pcount']=temp['pcount']
+        temp1=Issued_ticket.objects.filter(owner=request.user,booked_on__year=q_year).aggregate(pcount=Sum('number_of_travelers'))
+        result['ticket']['pcount']=temp1['pcount']
+        temp2=Attastation.objects.filter(owner=request.user,remitted_date__year=q_year).aggregate(pcount=Count('id'))
+        result['attastation']['pcount']=temp2['pcount']
+        temp3=Appoinment.objects.filter(owner=request.user,submission_date__year=q_year).aggregate(pcount=Count('id'))
+        result['appoinments']['pcount']=temp3['pcount']
+        return Response(result)
+
+      
+    else:
+       
+        result['visa']=Applied_visa.objects.filter(owner=request.user,remitted_date__year=q_year,remitted_date__month=q_month).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        result['ticket']=Issued_ticket.objects.filter(owner=request.user,booked_on__year=q_year,booked_on__month=q_month).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Sum('number_of_travelers'))
+        result['appoinments']=Appoinment.objects.filter(owner=request.user,submission_date__year=q_year,submission_date__month=q_month).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        result['attastation']=Attastation.objects.filter(owner=request.user,remitted_date__year=q_year,remitted_date__month=q_month).annotate(
+        net__profit=F('gross_amount') - F('net_amount')).aggregate(total__profit=Sum('net__profit'),count=Count('id'))
+        
+        if int(q_month)==1:
+            q_month=int(12)
+            q_year=int(q_year)-1
+        else:
+            q_month=int(q_month)-1
+
+        temp=Applied_visa.objects.filter(owner=request.user,remitted_date__month=(q_month),remitted_date__year=(q_year)).aggregate(pcount=Count('id'))
+        result['visa']['pcount']=temp['pcount']
+        temp1=Issued_ticket.objects.filter(owner=request.user,booked_on__month=q_month,booked_on__year=q_year).aggregate(pcount=Sum('number_of_travelers'))
+        result['ticket']['pcount']=temp1['pcount']
+        temp2=Attastation.objects.filter(owner=request.user,remitted_date__month=q_month,remitted_date__year=q_year).aggregate(pcount=Count('id'))
+        result['attastation']['pcount']=temp2['pcount']
+        temp3=Appoinment.objects.filter(owner=request.user,submission_date__month=q_month,submission_date__year=q_year).aggregate(pcount=Count('id'))
+        result['appoinments']['pcount']=temp3['pcount']
+
+        return Response(result)
+
+
+    
+
+
+
+
+
+
 
 
 @api_view(['GET'])
@@ -495,7 +689,6 @@ def ticketOnSale(request, pk):
                 serialized.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                print(serialized.errors)
                 return Response(status=status.HTTP_304_NOT_MODIFIED)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     elif request.method == "DELETE":
@@ -664,7 +857,6 @@ def agency(request, pk):
     if request.method == "GET":
         data = Agency.objects.get(id=pk)
         serialized = GetAgencytSerializer(data, many=False)
-        print(serialized.data   )
         
         return Response(serialized.data)
     elif request.method == "PUT":
@@ -678,7 +870,6 @@ def agency(request, pk):
                 except:
                     serialized.save()
                 return Response(status=status.HTTP_201_CREATED)
-            print(serialized.errors)
             return Response(status=status.HTTP_304_NOT_MODIFIED)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     elif request.method=="DELETE":

@@ -1,4 +1,4 @@
-import axios from 'axios'
+  import axios from 'axios'
 import React,{useEffect,useContext, useState} from 'react'
 import AuthContext from '../../context/AuthContext'
 import Loading from '../Loading';
@@ -10,11 +10,11 @@ import { errorOccured } from '../../utlties/Toastes';
 
 const Depatures = (props) => {
     const [loading,setLoading]=useState(false)
-    const {getHeaders,logoutUser}=useContext(AuthContext)
+    const {getHeaders,logoutUser,domain}=useContext(AuthContext)
     const [depatures,setDepatures]=useState([])
     useEffect(()=>{
         setLoading(true)
-        axios.get(`/api/get-tickets?from=${props.from}&to=${props.from}&q=${props.q}`,getHeaders).then(
+        axios.get(`${domain}/api/get-tickets?from=${props.from}&to=${props.from}&q=${props.q}`,getHeaders).then(
           (res)=>{
         setLoading(false)
         setDepatures(()=>res.data.results)

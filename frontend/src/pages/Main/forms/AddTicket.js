@@ -19,7 +19,7 @@ const AddTicket = () => {
   });
   const { errors } = methods.formState;
 
-  const { getAgencies, agencies,headers,logoutUser } = useContext(AuthContext);
+  const { getAgencies, agencies,headers,logoutUser,domain } = useContext(AuthContext);
 
   useEffect(() => {
     getAgencies();
@@ -32,7 +32,7 @@ const AddTicket = () => {
     data['title']=data['pax_name']+'x'+data['number_of_travelers']+' ticket'
     data['transaction_date']=data['booked_on']
 
-    axios.post("/api/ticket/",data,{headers}).then((res)=>{
+    axios.post(`${domain}/api/ticket/`,data,{headers}).then((res)=>{
       if (res.status==201) {
         created()
         clearForm()

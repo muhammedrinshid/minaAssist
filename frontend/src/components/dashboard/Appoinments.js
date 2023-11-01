@@ -9,13 +9,13 @@ import panda2 from "../../assets/padaaz2.png"
 import { errorOccured } from "../../utlties/Toastes";
 
 const Appoinments = (props) => {
-  const { getHeaders,logoutUser } = useContext(AuthContext);
+  const { getHeaders,logoutUser,domain } = useContext(AuthContext);
   const [loading,setLoading]=useState(false)
   const [appoinments,setApoinments]=useState([])
   useEffect(()=>{
     setLoading(true)
     axios.get(
-      `/api/get-appoinments?page=1&from=${props.from}&to=${props.from}&q=${props.q}&order=${true}`,
+      `${domain}/api/get-appoinments?page=1&from=${props.from}&to=${props.from}&q=${props.q}&order=${true}`,
       getHeaders
     ).then((res)=>{
       setLoading(false)

@@ -21,7 +21,7 @@ const Signup = () => {
 
     const navigate = useNavigate();
 
-    const {setAuthTocken,setUser,authTocken,user}=useContext(AuthContext)
+    const {setAuthTocken,setUser,authTocken,user,domain}=useContext(AuthContext)
 
     const schema=yup.object().shape({
         agency_name:yup.string().required("agency name is requierd field").min(4).max(30),
@@ -44,11 +44,11 @@ const Signup = () => {
     }
     const signupUser=async(data)=>{
 
-        axios.post("/api/create-user/",data).then((res)=>{
+        axios.post(`${domain}/api/create-user/`,data).then((res)=>{
             if (res.status==201) {
                 console.log(res.data)
                 axios
-                .post("/api/token/", {
+                .post(`${domain}/api/token/`, {
                   email: data.email,
                   password: data.password,
                 }).then((res) => {

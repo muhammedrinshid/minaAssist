@@ -38,6 +38,7 @@ import NotFound from "./pages/NotFound";
 import UpdateSellTicket from "./pages/Main/updates/sell-ticket/UpdateSellTicket";
 import UpdateAgency from "./pages/Main/updates/agency/UpdateAgency";
 import SmartTools from "./pages/Main/views/SmartTools";
+import AdminDashboard from "./pages/Main/views/AdminDashboard";
 const queryClient=new QueryClient()
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
                <Route path="/ticket-market" element={<TicketMarket/>}/>
                <Route path="/transactions" element={<Transactions/>}/>
                <Route path="/attastations" element={<Attastaions/>}/>
+               <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
                <Route path="/update-attastation/:id" element={<UpdateAttastation/>}/>
                <Route path="/update-appoinment/:id" element={<UpdateAppoinment/>}/>
                <Route path="/update-visa/:id" element={<UpdateVisa/>}/>
